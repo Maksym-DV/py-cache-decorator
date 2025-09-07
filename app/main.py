@@ -4,8 +4,9 @@ from typing import Callable
 def cache(func: Callable) -> Callable:
     result: dict = {}
 
-    def inner(*args) -> None:
-        if args in result.keys():
+    def inner(*args, **kwargs):
+        key = (args, tuple(sorted(kwargs)))
+        if key in result:
             print("Getting from cache")
             return result[args]
         else:
